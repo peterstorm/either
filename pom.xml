@@ -69,6 +69,21 @@
         <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter"/>
     </configuration>
 </plugin> 
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>1.6.0</version>
+    <executions>
+      <execution>
+        <goals>
+          <goal>java</goal>
+        </goals>
+      </execution>
+    </executions>
+    <configuration>
+      <mainClass>dk.oister.Main</mainClass>
+    </configuration>
+  </plugin>
       </plugins>
     </pluginManagement>
   </build>
