@@ -2,6 +2,7 @@ package dk.oister.util;
 
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public sealed interface Either<L, R> permits Left, Right {
     
@@ -26,6 +27,13 @@ public sealed interface Either<L, R> permits Left, Right {
     public abstract Optional<L> getLeft();
 
     public abstract Optional<R> getRight();
+
+    @SuppressWarnings("unchecked")
+    public static <L, R> Either<L, R> fromOptional(Optional<R> optional, Supplier<L> errorSupplier) {
+        return (Either<L, R>) optional
+            .map(value -> Either.pure(value))
+            .orElseGet(() -> Either.left(errorSupplier.get()));
+    }
 
     public abstract <R2> Either<L, R2> map(
         Function<? super R, ? extends R2> mapper

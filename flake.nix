@@ -1,27 +1,32 @@
-{ 
-description = "Flake to manage my Java workspace.";
-
-inputs.nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-
-outputs = inputs: 
-let
-  system = "aarch64-darwin";
-  pkgs = inputs.nixpkgs.legacyPackages.${system};
-  javaVersion = pkgs.jdk21_headless;
-in { 
-  devShell.${system} = pkgs.mkShell rec {
-    name = "java-shell";
-    packages = with pkgs; [ 
-	vscode 
-	gh 
-	maven
-    ];
-    buildInputs = [ 
-	javaVersion
-    ];
-    shellHook = ''
-      export JAVA_HOME=${javaVersion}
-    '';
+{
+  description = "Flake to manage my Java workspace.";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
   };
- };
+  outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
+
+      perSystem = { pkgs, config, system, ... }: let
+      javaVersion = pkgs.jdk21_headless;
+      in {
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+          ];
+          buildInputs = with pkgs;
+            [
+              javaVersion
+              maven
+            ];
+          shellHook = ''
+            export JAVA_HOME=${javaVersion}
+          '';
+        };
+      };
+    };
 }

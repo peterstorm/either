@@ -118,7 +118,22 @@ public class EitherUnitTest {
 
     }
 
-    static Function<String, Either<String, Integer>> safeParseInt = (s) -> {
+    @Test
+    @DisplayName("Ensure fromOptional behaves")
+    void testFromOptional() {
+        Optional<String> empty = Optional.empty();
+        Optional<String> some = Optional.of("Hello world");
+        Either<Error, String> right = Either.fromOptional(some, SomeError::new);
+        Either<Error, String> left = Either.fromOptional(empty, SomeError::new);
+        assertEquals(Either.pure("Hello world"), right);
+        assertEquals(Either.left(new SomeError()), left);
+    }
+
+    interface Error {};
+    record SomeError() implements Error {};
+    record SomeOtherError() implements Error {};
+
+    static Function<String, Either<String, Integer>> safeParseInt = s -> {
         try {
             Integer integer = Integer.parseInt(s);
             return Either.right(integer);
@@ -127,7 +142,5 @@ public class EitherUnitTest {
         }
     };
 
-    static Function<Integer, Either<String, String>> toString = (i) -> Either.pure(i.toString());
-
-
+    static Function<Integer, Either<String, String>> toString = i -> Either.pure(i.toString());
 }
