@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -115,7 +116,6 @@ public class EitherUnitTest {
         Either<?, String> bracketsToTheLeft = (Either.pure("1").flatMap(safeParseInt)).flatMap(toString);
         Either<?, String> bracketsToTheRight = Either.pure("1").flatMap(s -> (safeParseInt.apply(s).flatMap(toString)));
         assertEquals(bracketsToTheLeft, bracketsToTheRight);
-
     }
 
     @Test
@@ -127,6 +127,35 @@ public class EitherUnitTest {
         Either<Error, String> left = Either.fromOptional(empty, SomeError::new);
         assertEquals(Either.pure("Hello world"), right);
         assertEquals(Either.left(new SomeError()), left);
+    }
+
+    @Test
+    @DisplayName("Ensure mapLeft behaves")
+    void testMapLeft() {
+        Either<String, ?> left = Either.left("Hello from Left");
+        Either<String, String> right = Either.pure("Hello from Right");
+        assertEquals(left, left.mapLeft(Function.identity()));
+        // leaves Right alone
+        assertSame(right, right.mapLeft(v -> v.toUpperCase()));
+    }
+
+    @Test
+    @DisplayName("Ensure flatMapLeft behaves")
+    void testFlatMapLeft() {
+        Either<String, ?> left = Either.left("100");
+        Either<?, String> right = Either.pure("Hello from Right");
+        assertEquals(left, left.flatMapLeft(v -> Either.left("100")));
+        // leaves Right alone
+        assertSame(right, right.flatMapLeft(v -> Either.left("Did not touch the Right")));
+    }
+
+    @Test
+    @DisplayName("Ensure fold behaves")
+    void testFold() {
+        Either<String, ?> left = Either.left("1");
+        Either<?, String> right = Either.pure("2");
+        assertEquals("1", left.fold(Objects::toString, Objects::toString));
+        assertEquals("2", right.fold(Objects::toString, Objects::toString));
     }
 
     interface Error {};
