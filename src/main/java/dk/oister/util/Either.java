@@ -43,5 +43,18 @@ public sealed interface Either<L, R> permits Left, Right {
         Function<? super R, ? extends Either<? extends L, ? extends R2>> flatMapper
     );
 
+    public abstract <L2> Either<L2, R> mapLeft(
+        Function<? super L, ? extends L2> mapper
+    );
+
+    public abstract <L2> Either<L2, R> flatMapLeft(
+        Function<? super L, ? extends Either<? extends L2, ? extends R>> mapper
+    );
+
+    public abstract <U> U fold(
+        Function<? super L, ? extends U> leftMapper,
+        Function<? super R, ? extends U> rightMapper
+    );
+
 }
 
