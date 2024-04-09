@@ -12,7 +12,7 @@ jobs:
     name: publish package
     runs-on: ubuntu-latest
     needs: [ verify ]
-    if: ${{ github.ref == 'ref/head/main' }}
+    if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/development"]'), github.ref) }}
     steps:
     - uses: s4u/maven-settings-action@v2.8.0
       with:
