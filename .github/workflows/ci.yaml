@@ -1,0 +1,21 @@
+name: ci
+
+on:
+  push:
+
+jobs:
+  verify:
+    name: verify build
+    uses: ./.github/workflows/verify.yaml
+    
+  publish:
+    name: publish package
+    runs-on: ubuntu-latest
+    needs: [ verify ]
+    if: ${{ github.ref == 'ref/head/main' }}
+    steps:
+    - uses: s4u/maven-settings-action@v2.8.0
+      with:
+        servers: ${{ secrets.NEXUS_REGISTRY}}
+    - run: mvn clean deploy -Dmaven.test.skip=true
+
