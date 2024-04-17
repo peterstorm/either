@@ -12,6 +12,9 @@ jobs:
     name: publish package
     runs-on: ubuntu-latest
     needs: [ verify ]
+    permissions:
+      contents: read
+      packages: write
     if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/development"]'), github.ref) }}
     steps:
     - uses: actions/checkout@v4
