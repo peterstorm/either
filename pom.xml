@@ -9,8 +9,8 @@
 	<version>0.1</version>
   <distributionManagement>
         <repository>
-            <id>nexus</id>
-            <url>https://nexus3.tre.se/</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/peterstorm/either</url>
         </repository>
     </distributionManagement>
 	<properties>
