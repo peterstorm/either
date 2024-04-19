@@ -28,7 +28,7 @@ jobs:
       id: bump
       uses: nnichols/maven-version-bump-action@v3
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: print version
       run: "echo 'New Version: ${{steps.bump.outputs.version}}'"
     - name: publish package
