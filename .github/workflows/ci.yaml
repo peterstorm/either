@@ -24,6 +24,13 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+    - name: bump version
+      id: bump
+      uses: nnichols/maven-version-bump-action@v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: print version
+      run: "echo 'New Version: ${{steps.bump.outputs.version}}'"
     - name: publish package
       run: mvn clean deploy -Dmaven.test.skip=true
       env:
