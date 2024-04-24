@@ -8,11 +8,17 @@
 	<artifactId>either</artifactId>
 	<version>0.2.0</version>
   <distributionManagement>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/peterstorm/either</url>
-        </repository>
-    </distributionManagement>
+    <repository>
+      <id>oister</id>
+      <url>https://pkgs.dev.azure.com/oister/_packaging/oister/maven/v1</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </distributionManagement>
 	<properties>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
