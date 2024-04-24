@@ -7,7 +7,6 @@ jobs:
   verify:
     name: verify build
     uses: ./.github/workflows/verify.yaml
-    
   publish:
     name: publish package
     runs-on: ubuntu-latest
@@ -32,6 +31,7 @@ jobs:
     - name: print version
       run: "echo 'New Version: ${{steps.bump.outputs.version}}'"
     - name: publish package
+      uses: s4u/maven-settings-action@v2.8.0
+      with:
+        servers: ${{ secrets.AZURE_MAVEN}}
       run: mvn clean deploy -Dmaven.test.skip=true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
