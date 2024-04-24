@@ -9,8 +9,8 @@
 	<version>0.2.0</version>
   <distributionManagement>
     <repository>
-      <id>oister</id>
-      <url>https://pkgs.dev.azure.com/oister/_packaging/oister/maven/v1</url>
+      <id>oisterMaven</id>
+      <url>https://pkgs.dev.azure.com/oister/oister/_packaging/oisterMaven/maven/v1</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -19,7 +19,7 @@
       </snapshots>
     </repository>
   </distributionManagement>
-	<properties>
+  <properties>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
 	</properties>
