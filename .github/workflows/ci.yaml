@@ -14,7 +14,7 @@ jobs:
     permissions:
       contents: write
       packages: write
-    if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/development"]'), github.ref) }}
+    if: ${{ contains(fromJSON('["refs/heads/release", "refs/heads/snapshot"]'), github.ref) }}
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 21
