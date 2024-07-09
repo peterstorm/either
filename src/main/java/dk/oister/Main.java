@@ -19,6 +19,7 @@ public class Main {
         Version javaVersion = Runtime.version();
         System.out.println(javaVersion);
         testPatterMatching(right);
+        System.out.println("I'm an Optional.empty");
         Optional<String> optional = Optional.empty();
         Either<Error, String> either = Either.fromOptional(optional, SomeError::new);
         System.err.println(either);
