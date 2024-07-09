@@ -35,6 +35,14 @@ public sealed interface Either<L, R> permits Left, Right {
             .orElseGet(() -> Either.left(errorSupplier.get()));
     }
 
+    public static <L, R> Either<L, R> fromTryCatch(SupplierWithException<R> supplier, Function<Throwable, L> errorMapper) {
+        try {
+            return Either.pure(supplier.supply());
+        } catch (Throwable e) {
+            return Either.left(errorMapper.apply(e));
+        }
+    }
+
     public abstract <R2> Either<L, R2> map(
         Function<? super R, ? extends R2> mapper
     );
@@ -57,4 +65,3 @@ public sealed interface Either<L, R> permits Left, Right {
     );
 
 }
-
