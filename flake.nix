@@ -14,9 +14,11 @@
 
       perSystem = { pkgs, config, system, ... }: let
       javaVersion = pkgs.jdk21_headless;
+
       in {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
+            nodejs_22
           ];
           buildInputs = with pkgs;
             [
