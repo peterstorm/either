@@ -15,19 +15,35 @@ public class Main {
     record SomeOtherError(String errorMessage) implements Error {};
 
     public static void main(String[] args) {
-        Either<String, String> right = Either.right("Hello World, from Right!");
-        Either<Error, Integer> fromTryCatch = Either.fromTryCatch(() -> (Integer) Integer.parseInt("Hello"), e -> new SomeOtherError(e.getMessage()));
-        Either<Error, Integer> fromTryCatchRight = Either.fromTryCatch(() -> (Integer) Integer.parseInt("23"), e -> new SomeOtherError(e.getMessage()));
+        Either<String, String> right = Either
+          .right("Hello World, from Right!");
+
+        Either<Error, Integer> fromTryCatch = Either
+          .fromTryCatch(
+              () -> (Integer) Integer.parseInt("Hello"),
+              e -> new SomeOtherError(e.getMessage())
+          );
+
+        Either<Error, Integer> fromTryCatchRight = Either
+          .fromTryCatch(
+              () -> (Integer) Integer.parseInt("23"),
+              e -> new SomeOtherError(e.getMessage())
+          );
+
         System.out.println("Testing fromTryCatch");
         System.out.println(fromTryCatch);
         System.out.println(fromTryCatchRight);
         System.out.println(right);
         Version javaVersion = Runtime.version();
         System.out.println(javaVersion);
+
         testPatterMatching(right);
+
+
         System.out.println("I'm an Optional.empty");
         Optional<String> optional = Optional.empty();
-        Either<Error, String> either = Either.fromOptional(optional, SomeError::new);
+        Either<Error, String> either = Either
+          .fromOptional(optional, SomeError::new);
         System.err.println(either);
     }
 
