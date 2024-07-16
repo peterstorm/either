@@ -1,6 +1,5 @@
 package dk.oister;
 
-import java.lang.Runtime.Version;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -34,11 +33,8 @@ public class Main {
         System.out.println(fromTryCatch);
         System.out.println(fromTryCatchRight);
         System.out.println(right);
-        Version javaVersion = Runtime.version();
-        System.out.println(javaVersion);
 
         testPatterMatching(right);
-
 
         System.out.println("I'm an Optional.empty");
         Optional<String> optional = Optional.empty();

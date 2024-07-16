@@ -130,6 +130,21 @@ public class EitherUnitTest {
     }
 
     @Test
+    @DisplayName("Ensure fromTryCatch behaves")
+    void testFromTryCatch() {
+        Either<Error, Integer> right = Either.fromTryCatch(
+            () -> Integer.parseInt("1"),
+            e -> new SomeErrorWithMessage(e.getMessage())
+        );
+        Either<Error, Integer> left = Either.fromTryCatch(
+            () -> Integer.parseInt("awefawef"),
+            e -> new SomeErrorWithMessage(e.getMessage())
+        );
+        assertEquals(Either.pure(1), right);
+        assertEquals(Either.left(new SomeErrorWithMessage("For input string: \"awefawef\"")), left);
+    }
+
+    @Test
     @DisplayName("Ensure mapLeft behaves")
     void testMapLeft() {
         Either<String, ?> left = Either.left("Hello from Left");
@@ -161,6 +176,7 @@ public class EitherUnitTest {
     interface Error {};
     record SomeError() implements Error {};
     record SomeOtherError() implements Error {};
+    record SomeErrorWithMessage(String message) implements Error {};
 
     static Function<String, Either<String, Integer>> safeParseInt = s -> {
         try {
